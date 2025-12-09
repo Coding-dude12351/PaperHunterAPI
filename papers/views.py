@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.contrib.auth.decorators import login_required
 
 # Home page route
 # We should not forget to add the following functionalities in this route:
@@ -10,6 +11,7 @@ from rest_framework.response import Response
 # ● We should implement pagination for large datasets.
 @api_view(['GET'])
 def index(request):
+    # Placeholder
     papers = []
 
     return Response({'papers': papers}, status=status.HTTP_200_OK)
@@ -23,6 +25,7 @@ def read_paper(request, paper_id):
 # List all examination levels route
 @api_view(['GET'])
 def examination_levels(request):
+    # Placeholder
     levels = []
 
     return Response({'examination_levels': levels}, status=status.HTTP_200_OK)
@@ -30,6 +33,7 @@ def examination_levels(request):
 # List all subjects route
 @api_view(['GET'])
 def subjects(request):
+    # Placeholder
     subjects = []
 
     return Response({'subjects': subjects}, status=status.HTTP_200_OK)
@@ -37,6 +41,22 @@ def subjects(request):
 # List paper stats route
 @api_view(['GET'])
 def paper_stats(request):
+    # Placeholder
     stats = {}
 
     return Response({'paper_stats': stats}, status=status.HTTP_200_OK)
+
+# Download paper route
+@login_required(login_url='users:login')
+@api_view(['GET'])
+def download_paper(request, paper_id):
+    return Response({'message': 'Paper downloaded successfully!'}, status.HTTP_200_OK)
+
+# Show downloaded papers
+@login_required(login_url='users:login')
+@api_view(['GET'])
+def show_downloads(request):
+    # Placeholder
+    downloads = []
+
+    return Response({'downloads': downloads}, status=status.HTTP_200_OK)

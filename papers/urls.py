@@ -10,5 +10,7 @@ urlpatterns = [
       path('examination-levels/', views.examination_levels, name='examination_levels'),
       path('subjects/', views.subjects, name='subjects'),
       path('paper-stats/', views.paper_stats, name='paper_stats'),
+      path('<int:paper_id>/download/', views.download_paper, name='download_paper'),
+      path('downloads/', views.show_downloads, name='show_downloads'),
       
 ]
