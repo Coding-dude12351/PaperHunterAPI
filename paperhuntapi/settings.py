@@ -1,5 +1,4 @@
 
-
 from pathlib import Path
 from dotenv import load_dotenv
 import os
@@ -16,6 +15,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
 
 # No need to add allowed hosts for development for now if debug is True, otherwise the server won't start.
+# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS')
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -24,7 +24,6 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
@@ -33,14 +32,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'ai_chats',
 ]
-
-# REST_FRAMEWORK = {
-#     # Use Django's standard `django.contrib.auth` permissions,
-#     # or allow read-only access for unauthenticated users.
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-#     ]
-# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -127,4 +118,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'login'
 
-    
+LOGIN_REDIRECT_URL = 'papers:index'
