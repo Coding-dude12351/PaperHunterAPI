@@ -4,26 +4,34 @@ from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
 from .models import Paper
 from .serializers import PaperSerializer, LevelSerializer, SubjectSerializer
+from .utils.filters import PaperFilter
 
 # Home page route
-# We should not forget to add the following functionalities in this route:
-# ●	Filter by Level: /api/papers/?level=MSCE
-# ●	Filter by Level & Subject: /api/papers/?level=MSCE&subject=Mathematics
-# ●	Search by Keyword: /api/papers/?search=English
-# ● We should implement pagination for large datasets.
 @api_view(['GET'])
 def index(request):
-    papers = Paper.objects.all()
+    # We should add the following functionalities in this route:
+    # Done: Filter by Level: /api/papers/?level=MSCE
+    # Done:Filter by Level & Subject: /api/papers/?level=MSCE&subject=Mathematics
+    # Done:Search by Keyword: /api/papers/?search=English
+    # We should implement pagination for large datasets(to be implemented later).
+
+    paper_filter = PaperFilter(request.GET, queryset=Paper.objects.all())
+    papers = paper_filter.qs
     serializer = PaperSerializer(papers, many=True)
     papers = serializer.data
 
     return Response({'papers': papers}, status=status.HTTP_200_OK)
 
-# Read papers route
+# Read paper route
 @api_view(['GET'])
 def read_paper(request, paper_id):
-    
-    return Response({'message': 'You are reading a Mathematics paper!'})
+    try:
+        paper = Paper.objects.get(id=paper_id)
+    except Paper.DoesNotExist:
+        return Response({'error': 'Paper not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = PaperSerializer(paper)
+    return Response({'paper': serializer.data}, status=status.HTTP_200_OK)
 
 # List all examination levels route
 @api_view(['GET'])

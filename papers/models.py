@@ -20,7 +20,7 @@ class Paper(models.Model):
       title = models.CharField(max_length=200)
       level = models.ForeignKey(Level, on_delete=models.CASCADE)
       subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-      year = models.CharField(max_length=4)
+      year = models.PositiveIntegerField()
       paper_number = models.CharField(max_length=20)
       file_link = models.TextField()
       uploaded_at = models.DateTimeField(auto_now_add=True)

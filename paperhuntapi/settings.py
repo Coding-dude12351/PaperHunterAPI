@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
@@ -31,6 +32,7 @@ INSTALLED_APPS = [
     'papers',
     'rest_framework',
     'ai_chats',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -42,6 +44,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
+
 
 ROOT_URLCONF = 'paperhuntapi.urls'
 

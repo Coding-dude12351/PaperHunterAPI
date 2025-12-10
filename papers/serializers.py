@@ -5,13 +5,13 @@ from .models import Paper, Level, Subject
 class LevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Level
-        fields = '__all__'
+        fields = ['name']
 
 # Serializer for Subject model
 class SubjectSerializer(serializers.ModelSerializer):
       class Meta:
             model = Subject
-            fields = '__all__'
+            fields = ['name']
 
 # Serializer for Paper model
 class PaperSerializer(serializers.ModelSerializer):
@@ -21,4 +21,3 @@ class PaperSerializer(serializers.ModelSerializer):
       class Meta:
           model = Paper
           fields = '__all__'
-          

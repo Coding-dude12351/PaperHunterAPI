@@ -2,7 +2,6 @@
 # This module handles file uploads to Supabase storage
 import os
 from werkzeug.utils import secure_filename
-import uuid
 from dotenv import load_dotenv
 from supabase import create_client, Client
 
