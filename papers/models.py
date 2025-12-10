@@ -16,7 +16,6 @@ class Subject(models.Model):
          return self.name
 
 # Papers
-# Attributes: title, level(FK), subject(FK), year, paper_number, file_link(URL), uploaded_at, is_indexed
 class Paper(models.Model):
       title = models.CharField(max_length=200)
       level = models.ForeignKey(Level, on_delete=models.CASCADE)
