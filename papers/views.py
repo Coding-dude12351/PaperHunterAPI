@@ -5,16 +5,15 @@ from django.contrib.auth.decorators import login_required
 from .models import Paper, Level, Subject
 from .serializers import PaperSerializer, LevelSerializer, SubjectSerializer
 from .utils.filters import PaperFilter
-# from .utils.download_papers import paper_download_redirect
 
 # Home page route
 @api_view(['GET'])
 def index(request):
     # We should add the following functionalities in this route:
     # Done: Filter by Level: /api/papers/?level=MSCE
-    # Done:Filter by Level & Subject: /api/papers/?level=MSCE&subject=Mathematics
-    # Done:Search by Keyword: /api/papers/?search=English
-    # We should implement pagination for large datasets(to be implemented later).
+    # Done: Filter by Level & Subject: /api/papers/?level=MSCE&subject=Mathematics
+    # Done: Search by Keyword: /api/papers/?search=English
+    # Todo: We should implement pagination for large datasets(to be implemented later).
 
     try:
         papers_queryset = Paper.objects.all().order_by('year')
@@ -71,17 +70,18 @@ def subjects(request):
 # @login_required(login_url='users:login')
 @api_view(['GET'])
 def download_paper(request, paper_id):
-    # # To be edited later. I have just copied the code from the read papers route
-    # try:
-    #     paper = Paper.objects.get(id=paper_id)
-    #     download_URL = paper_download_redirect(paper)
-    #     print("DOWNLOAD:", download_URL)
+    try:
+        paper = Paper.objects.get(id=paper_id)
+        # Implement download logic here (e.g., generate a download link, track downloads, etc
+        # For now, we'll just return a success message
+        # download_URL = paper_download_redirect(paper)
+        print("DOWNLOAD:", paper.file)
 
-    # except Paper.DoesNotExist:
-    #     return Response({'error': 'Paper not found.'}, status=status.HTTP_404_NOT_FOUND)
+    except Paper.DoesNotExist:
+        return Response({'error': 'Paper not found.'}, status=status.HTTP_404_NOT_FOUND)
     
-    # return Response({'message': 'Paper downloaded successfully!'}, status=status.HTTP_200_OK)
-    pass
+    return Response({'message': 'Paper downloaded successfully!'}, status=status.HTTP_200_OK)
+    
 
 # Show downloaded papers
 @login_required(login_url='users:login')
@@ -91,17 +91,3 @@ def show_downloads(request):
     downloads = []
 
     return Response({'downloads': downloads}, status=status.HTTP_200_OK)
-
-# Upload papers
-@login_required(login_url='users:login')
-@api_view(['POST'])
-def upload_papers(request):
-    # get paper infor
-    # data = request.POST
-    # title = data.title
-    # year
-    # level
-    # subject
-    # paper_number
-    # file
-    pass
