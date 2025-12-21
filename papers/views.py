@@ -5,6 +5,10 @@ from .models import Paper, Level, Subject, DownloadRecord
 from .serializers import PaperSerializer, LevelSerializer, SubjectSerializer, DownloadRecordSerializer
 from .utils.filters import PaperFilter
 from rest_framework.views import APIView
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
+
+# Notes:
+# Throttling is similar to permissions, in that it determines if a request should be authorized. Throttles indicate a temporary state, and are used to control the rate of requests that clients can make to an API.
 
 # Home page route
 class IndexView(APIView):
@@ -35,6 +39,7 @@ class IndexView(APIView):
 class ReadPaperView(APIView):
 
     permission_classes=[AllowAny]
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
     def get(self, request, paper_id, *args, **kwargs):
         try:
             paper = Paper.objects.get(id=paper_id)
@@ -75,6 +80,7 @@ class ListSubjectsView(APIView):
 class DownloadPaperView(APIView):
 
     permission_classes=[IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
     def get(self, request, paper_id, *args, **kwargs):
         user = request.user
 
