@@ -1,7 +1,7 @@
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.contrib.auth.decorators import login_required
 from .models import Paper, Level, Subject, DownloadRecord
 from .serializers import PaperSerializer, LevelSerializer, SubjectSerializer, DownloadRecordSerializer
 from .utils.filters import PaperFilter
@@ -65,7 +65,7 @@ def subjects(request):
     
 
 # Download paper route  
-# @login_required(login_url='users:login')
+@permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def download_paper(request, paper_id):
     user = request.user
@@ -82,7 +82,7 @@ def download_paper(request, paper_id):
         return Response({'error': 'Paper not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 # Show downloaded papers
-# @login_required(login_url='users:login')
+@permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def show_downloads(request):
     user = request.user
