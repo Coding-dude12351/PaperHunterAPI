@@ -63,7 +63,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
-
 class LoginSerializer(serializers.Serializer):
     """Serializer for user login"""
     username = serializers.CharField(required=True)
